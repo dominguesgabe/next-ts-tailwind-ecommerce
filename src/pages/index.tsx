@@ -19,7 +19,7 @@ export default function Home() {
     } else {
       setProducts([...products, ...fetchedProducts])
     }
-    console.log("aaa")
+
     setApiPage(apiPage + 1)
   }
 

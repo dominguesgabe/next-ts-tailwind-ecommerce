@@ -2,13 +2,13 @@ import { useState, useEffect, MouseEvent } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Product } from "@/types"
+import { StorageObjectItem } from "@/factories"
+import { StorageItem } from "@/types"
+import { cartUtils } from "@/utils"
 
-interface StorageItem {
-  productId: string
-  quantity: string
-}
 export default function Product() {
   const [product, setProduct] = useState<Product>()
+  const [addCartQuantity, setAddCartQuantity] = useState(1)
   const router = useRouter()
 
   useEffect(() => {
@@ -21,39 +21,34 @@ export default function Product() {
   }, [router.query])
 
   function addToCart() {
-    const storedCart = localStorage.getItem("cart")
+    const storageCart = localStorage.getItem("cart") ?? "[]"
+    const actualCart: StorageItem[] = JSON.parse(storageCart)
 
-    if (storedCart) {
-      const parsedStoredCart: StorageItem[] = JSON.parse(storedCart)
-      const isItemAlreadyInCart = parsedStoredCart.some(
-        (item) => item.productId == product?.id
+    let newCart: StorageItem[]
+
+    if (actualCart.length) {
+      const isItemAlreadyInCart = actualCart.some(
+        (item) => item.productId === product?.id
       )
 
       if (isItemAlreadyInCart) {
-        const newCart = parsedStoredCart.map((item) => {
-          if (item.productId === product?.id) {
-            return {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          }
-
-          return item
-        })
-
-        console.log(newCart)
+        newCart = cartUtils.quantityModifier({
+          cart: actualCart,
+          targetProductId: product?.id ?? 1,
+          newQuantity: 1,
+        }) //targetProductId can cause bugs, todo fix
+      } else {
+        newCart = [...actualCart, new StorageObjectItem(product!.id, 1)]
       }
-      // const newItem = { productId: product?.id, quantity: 1 }
-
-      // const newCart = JSON.stringify([...storedCartObject, , newItem])
-
-      // localStorage.setItem("cart", newCart)
+    } else {
+      newCart = [new StorageObjectItem(product!.id, 1)]
     }
+
+    localStorage.setItem("cart", JSON.stringify(newCart))
   }
 
-  function handleAddToCart(event: MouseEvent<HTMLButtonElement>) {
+  function handleChangeItem(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
-    addToCart()
   }
 
   return (
@@ -68,7 +63,12 @@ export default function Product() {
           src={"http://localhost:3004" + product.image_url}
           alt={product.name}
         />
-        <button onClick={handleAddToCart}>Add to cart</button>
+        <div>
+          <button onClick={handleChangeItem}>-</button>
+          <input name="inputQuantity" value={addCartQuantity} type="number" />
+          <button onClick={handleChangeItem}>+</button>
+        </div>
+        <button onClick={addToCart}>Add to cart</button>
       </main>
     )
   )
