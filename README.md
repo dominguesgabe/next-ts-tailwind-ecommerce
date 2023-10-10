@@ -15,7 +15,7 @@ First, make sure that you are running Node v18.17
 
 ### Development Mode
 
-1. Install project dependencies with `npm install` in both pages **api** and **frontend**
+1. Install project dependencies with `npm install`
 
 2. Run the development server:
 

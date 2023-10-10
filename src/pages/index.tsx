@@ -3,29 +3,35 @@ import { apiService } from "@/services/apiService"
 import { Product } from "@/types"
 import Link from "next/link"
 
-export default function Home() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [apiPage, setApiPage] = useState(1)
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3004/products?_page=1&_limit=4")
+  const products = await res.json()
 
-  useEffect(() => {
-    getProducts()
-  }, [])
+  return { props: { data: products } }
+}
+interface HomeProps {
+  data: Product[]
+}
+
+export default function Home({ data }: HomeProps) {
+  const [products, setProducts] = useState<Product[]>(data)
+  const [nextApiPage, setNextApiPage] = useState(2)
 
   async function getProducts() {
-    const fetchedProducts = await apiService.get(apiPage)
+    const fetchedProducts = await apiService.get(nextApiPage)
 
-    if (apiPage === 1) {
+    if (nextApiPage === 1) {
       setProducts(fetchedProducts)
     } else {
       setProducts([...products, ...fetchedProducts])
     }
-    console.log("aaa")
-    setApiPage(apiPage + 1)
+
+    setNextApiPage(nextApiPage + 1)
   }
 
   return (
     <div>
-      {apiPage}
+      {nextApiPage}
       <ul>
         {products &&
           products.map((product) => (
