@@ -31,7 +31,11 @@ export function Footer() {
         <div>
           <h2 className="font-medium mb-6 text-xl">Support</h2>
           <ul className="space-y-4">
-            <li>111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.</li>
+            <li>
+              111 Bijoy sarani, Dhaka,
+              <br />
+              DH 1515, Bangladesh.
+            </li>
             <li>exclusive@gmail.com</li>
             <li>+88015-88888-9999</li>
           </ul>
