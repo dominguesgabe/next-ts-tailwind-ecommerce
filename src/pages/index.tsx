@@ -1,8 +1,6 @@
 import { useState } from "react"
-import { apiService } from "@/services/apiService"
 import { Product } from "@/types"
-import Link from "next/link"
-import { Banner, Listing } from "@/components"
+import { MainBanner, Listing, LimitedTimeOffer } from "@/components"
 
 export async function getServerSideProps() {
   const res = await fetch("http://localhost:3004/products?_page=1&_limit=4")
@@ -19,8 +17,9 @@ export default function Home({ data }: HomeProps) {
 
   return (
     <div className="container mx-auto mt-10">
-      <Banner />
+      <MainBanner />
       <Listing products={products} setProducts={setProducts} />
+      <LimitedTimeOffer />
     </div>
   )
 }

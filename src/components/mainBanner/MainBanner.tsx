@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export function Banner() {
+export function MainBanner() {
   return (
     <div className="relative">
       <Image

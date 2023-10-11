@@ -28,10 +28,11 @@ export function Listing({ products, setProducts }: ListingParams) {
       </div>
       <div className="mt-6 pb-10 border-b text-center">
         <button
-          className="py-4 px-12 text-white bg-red-600 rounded hover:opacity-90"
+          disabled={nextApiPage > 3}
+          className="py-4 px-12 text-white bg-red-600 rounded enabled:hover:bg-red-500 disabled:bg-red-300"
           onClick={() => getProducts()}
         >
-          Carregar mais
+          See more
         </button>
       </div>
     </section>
