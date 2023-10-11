@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { apiService } from "@/services/apiService"
 import { Product } from "@/types"
 import Link from "next/link"
