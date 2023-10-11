@@ -51,7 +51,7 @@ export function Header() {
                 placeholder="What are you looking for?"
               />
             </div>
-            <div className=" flex justify-center items-center gap-4">
+            <div className=" flex justify-center items-center gap-5">
               <a href="#" className="relative">
                 <Image
                   src={"Wishlist.svg"}
@@ -59,9 +59,9 @@ export function Header() {
                   height={32}
                   alt="See your Wishlist"
                 />
-                <span className="text-white bg-red-600 block w-4 h-4 rounded-full text-center absolute top-0 right-0 z-10">
+                <div className="text-white bg-red-600 w-5 h-5 rounded-full absolute -top-1 -right-1 z-10 flex justify-center items-center">
                   4
-                </span>
+                </div>
               </a>
               <Link href={"/cart"}>
                 <Image

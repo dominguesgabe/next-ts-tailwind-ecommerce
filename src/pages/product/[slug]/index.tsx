@@ -22,6 +22,7 @@ interface ProductPageProps {
 
 export default function Product({ product }: ProductPageProps) {
   const [addCartQuantity, setAddCartQuantity] = useState(1)
+  console.log(product)
 
   function addToCart() {
     const storageCart = localStorage.getItem("cart") ?? "[]"
