@@ -1,9 +1,12 @@
-import { useState, useEffect, MouseEvent } from "react"
-import { apiService } from "@/services"
+import { useState, MouseEvent } from "react"
+import type { GetServerSideProps } from "next"
 import { Product } from "@/types"
 import { StorageObjectItem } from "@/factories"
 import { StorageItem } from "@/types"
 import { cartUtils } from "@/utils"
+import { Breadcrumb } from "@/components"
+import Image from "next/image"
+import { ApiEnum } from "@/enums"
 
 export async function getServerSideProps(context) {
   const productId = context.query.slug
@@ -22,7 +25,7 @@ interface ProductPageProps {
 
 export default function Product({ product }: ProductPageProps) {
   const [addCartQuantity, setAddCartQuantity] = useState(1)
-  console.log(product)
+  const imagePath = ApiEnum.BASE_PATH + product.image_url
 
   function addToCart() {
     const storageCart = localStorage.getItem("cart") ?? "[]"
@@ -56,21 +59,57 @@ export default function Product({ product }: ProductPageProps) {
   }
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-24`}>
-      <p>product name: {product.name}</p>
-      <p>product description: {product.description}</p>
-      <p>product price: {product.price}</p>
-      <img
-        className="w-60"
-        src={"http://localhost:3004" + product.image_url}
-        alt={product.name}
-      />
-      {/* <div>
-          <button onClick={handleChangeItem}>-</button>
-          <input name="inputQuantity" value={addCartQuantity} type="number" />
-          <button onClick={handleChangeItem}>+</button>
-        </div> */}
-      <button onClick={addToCart}>Add to cart</button>
-    </main>
+    <div className={`container flex flex-col mx-auto`}>
+      <Breadcrumb page={"product"} path={product.name} />
+      <div className="w-full flex justify-between gap-28">
+        <div className="bg-neutral-100 relative w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
+          <Image
+            loader={() => imagePath}
+            src={imagePath}
+            width={500}
+            height={500}
+            alt={product.name}
+          />
+        </div>
+        <div className="w-2/5 ">
+          <h1 className="mt-16 font-semibold text-2xl">{product.name}</h1>
+          <div className="text-2xl mt-14">${product.price}</div>
+          <div className="mt-6 text-sm pb-6 border-b border-neutral-400">
+            {product.description}
+          </div>
+          <div className="mt-6 flex justify-between items-center">
+            <div className="w-2/5 flex items-center">
+              <button className="hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-l text-lg">
+                -
+              </button>
+              <input
+                type="number"
+                className="w-32 text-center border-y h-11 border-neutral-400"
+              />
+              <button className=" hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-r text-lg">
+                +
+              </button>
+            </div>
+            <div className="w-2/5">
+              <button
+                onClick={addToCart}
+                className="w-full h-11 bg-red-600 text-white hover:bg-red-400 rounded"
+              >
+                Add to cart
+              </button>
+            </div>
+            <div>
+              <Image
+                src={"/ProductPageWishlistButton.svg"}
+                width={42}
+                height={42}
+                alt="Add to your Wishlist"
+                className="hover:cursor-pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

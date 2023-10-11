@@ -1,6 +1,7 @@
 import { ApiEnum } from "@/enums"
 import { Product } from "@/types"
 import Image from "next/image"
+import Link from "next/link"
 
 interface ListingItemParams {
   product: Product
@@ -10,11 +11,11 @@ export function ListingItem({ product }: ListingItemParams) {
   const imagePath = ApiEnum.BASE_PATH + product.image_url
   return (
     <li className="mb-8">
-      <a href={`/product/${product.id}`}>
+      <Link href={`/product/${product.id}`}>
         <div className="bg-neutral-100 relative w-full h-80 aspect-square rounded flex justify-center items-center">
           <Image
             loader={() => imagePath}
-            src={ApiEnum.BASE_PATH + product.image_url}
+            src={imagePath}
             width={190}
             height={180}
             alt={product.name}
@@ -52,7 +53,7 @@ export function ListingItem({ product }: ListingItemParams) {
             <span className="text-gray-600 ml-2 text-sm">(65)</span>
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   )
 }
