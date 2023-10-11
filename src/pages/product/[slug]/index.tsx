@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
 
   if (!product[0]) return { notFound: true }
 
-  return { props: { data: product[0] } }
+  return { props: { product: product[0] } }
 }
 interface ProductPageProps {
   product: Product

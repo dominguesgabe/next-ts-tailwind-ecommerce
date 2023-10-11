@@ -1,4 +1,4 @@
-import { PreHeader } from "@/components"
+import { PreHeader, Logo } from "@/components"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -6,11 +6,11 @@ export function Header() {
   return (
     <>
       <PreHeader />
-      <header className="w-screen border-b">
+      <header className="border-b">
         <div className="container mx-auto pt-10 pb-4 flex justify-between gap-36">
           <div className="flex w-3/5 justify-between items-center">
             <h1>
-              <Image src={"Logo.svg"} width={128} height={24} alt="Exclusive" />
+              <Logo />
             </h1>
             <nav>
               <ul className="flex gap-12">
@@ -40,7 +40,7 @@ export function Header() {
           <div className="flex w-2/5 justify-between">
             <div className="relative w-72">
               <Image
-                src={"Search.svg"}
+                src={"/Search.svg"}
                 width={24}
                 height={24}
                 alt="Search for products"
@@ -54,7 +54,7 @@ export function Header() {
             <div className=" flex justify-center items-center gap-5">
               <a href="#" className="relative">
                 <Image
-                  src={"Wishlist.svg"}
+                  src={"/Wishlist.svg"}
                   width={32}
                   height={32}
                   alt="See your Wishlist"
@@ -65,7 +65,7 @@ export function Header() {
               </a>
               <Link href={"/cart"}>
                 <Image
-                  src={"Cart.svg"}
+                  src={"/Cart.svg"}
                   width={32}
                   height={32}
                   alt="See your cart"
@@ -73,7 +73,7 @@ export function Header() {
               </Link>
               <a href="#">
                 <Image
-                  src={"User.svg"}
+                  src={"/User.svg"}
                   width={32}
                   height={32}
                   alt="See your Wishlist"

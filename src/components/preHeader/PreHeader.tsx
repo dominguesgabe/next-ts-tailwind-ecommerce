@@ -14,7 +14,7 @@ export function PreHeader() {
           <button>
             English{" "}
             <Image
-              src={"DropDown.svg"}
+              src={"/DropDown.svg"}
               width={24}
               height={24}
               alt="Language"
