@@ -1,12 +1,11 @@
-import { useState, MouseEvent } from "react"
-import type { GetServerSideProps } from "next"
+import { useState, MouseEvent, ChangeEvent } from "react"
 import { Product } from "@/types"
 import { StorageObjectItem } from "@/factories"
 import { StorageItem } from "@/types"
 import { cartUtils } from "@/utils"
 import { Breadcrumb } from "@/components"
-import Image from "next/image"
 import { ApiEnum } from "@/enums"
+import Image from "next/image"
 
 export async function getServerSideProps(context) {
   const productId = context.query.slug
@@ -19,12 +18,12 @@ export async function getServerSideProps(context) {
 
   return { props: { product: product[0] } }
 }
-interface ProductPageProps {
+interface ProductPageParams {
   product: Product
 }
 
-export default function Product({ product }: ProductPageProps) {
-  const [addCartQuantity, setAddCartQuantity] = useState(1)
+export default function Product({ product }: ProductPageParams) {
+  const [cartQuantity, setCartQuantity] = useState(1)
   const imagePath = ApiEnum.BASE_PATH + product.image_url
 
   function addToCart() {
@@ -42,24 +41,34 @@ export default function Product({ product }: ProductPageProps) {
         newCart = cartUtils.quantityModifier({
           cart: actualCart,
           targetProductId: product.id,
-          newQuantity: 1,
+          newQuantity: cartQuantity,
         })
       } else {
-        newCart = [...actualCart, new StorageObjectItem(product.id, 1)]
+        newCart = [
+          ...actualCart,
+          new StorageObjectItem(product.id, cartQuantity),
+        ]
       }
     } else {
-      newCart = [new StorageObjectItem(product.id, 1)]
+      newCart = [new StorageObjectItem(product.id, cartQuantity)]
     }
 
     localStorage.setItem("cart", JSON.stringify(newCart))
+    setCartQuantity(1)
   }
 
-  function handleChangeItem(event: MouseEvent<HTMLButtonElement>) {
+  function handleChangeItemClick(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
+    const clickedButton = event.target as HTMLButtonElement
+    const operator = clickedButton.innerText
+
+    if (cartQuantity > 1 || operator !== "-") {
+      setCartQuantity(eval(cartQuantity + operator + 1))
+    }
   }
 
   return (
-    <div className={`container flex flex-col mx-auto`}>
+    <div className="container flex flex-col mx-auto">
       <Breadcrumb page={"product"} path={product.name} />
       <div className="w-full flex justify-between gap-28">
         <div className="bg-neutral-100 relative w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
@@ -78,15 +87,25 @@ export default function Product({ product }: ProductPageProps) {
             {product.description}
           </div>
           <div className="mt-6 flex justify-between items-center">
-            <div className="w-2/5 flex items-center">
-              <button className="hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-l text-lg">
+            <div className="w-2/5 flex items-center font-medium">
+              <button
+                onClick={handleChangeItemClick}
+                className="hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-l text-lg"
+              >
                 -
               </button>
               <input
-                type="number"
+                value={cartQuantity}
+                min={1}
+                onChange={(event) =>
+                  setCartQuantity(Number(event.target.value))
+                }
                 className="w-32 text-center border-y h-11 border-neutral-400"
               />
-              <button className=" hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-r text-lg">
+              <button
+                onClick={handleChangeItemClick}
+                className=" hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-r text-lg"
+              >
                 +
               </button>
             </div>
@@ -104,8 +123,41 @@ export default function Product({ product }: ProductPageProps) {
                 width={42}
                 height={42}
                 alt="Add to your Wishlist"
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer hover:opacity-80"
               />
+            </div>
+          </div>
+          <div className="mt-10 w-full rounded divide-y divide-neutral-400 border border-neutral-400 ">
+            <div className="px-4 py-6 flex  items-center gap-x-4">
+              <Image
+                src={"/Delivery.svg"}
+                width={40}
+                height={40}
+                alt="Free delivery"
+                className=""
+              />
+              <div className="font-medium">
+                <div>Free Delivery</div>
+                <div className="underline text-xs">
+                  Enter your postal code for Delivery Availability
+                </div>
+              </div>
+            </div>
+            <div className="px-4 py-6 flex  items-center gap-x-4">
+              <Image
+                src={"/ReturnDelivery.svg"}
+                width={40}
+                height={40}
+                alt="Free delivery"
+                className=""
+              />
+              <div className="font-medium">
+                <div>Return Delivery</div>
+                <div className="text-xs">
+                  Free 30 Days Delivery Returns.{" "}
+                  <span className="underline">Details</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
