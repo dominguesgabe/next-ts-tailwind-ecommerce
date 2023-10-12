@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-export default function Error404() {
+export function CartEmpty() {
   return (
     <div className="h-[600px] font-medium text-lg container flex mx-auto justify-center items-center flex-col gap-4">
-      Page not found.
+      Your cart is empty.
       <Link
         href={"/"}
         className="py-4 px-12 text-base bg-white border rounded hover:border-gray-900 font-medium"

@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ChangeEvent } from "react"
+import { useState, MouseEvent } from "react"
 import { Product } from "@/types"
 import { StorageObjectItem } from "@/factories"
 import { StorageItem } from "@/types"
@@ -46,11 +46,23 @@ export default function Product({ product }: ProductPageParams) {
       } else {
         newCart = [
           ...actualCart,
-          new StorageObjectItem(product.id, cartQuantity),
+          new StorageObjectItem(
+            product.id,
+            product.name,
+            product.image_url,
+            cartQuantity
+          ),
         ]
       }
     } else {
-      newCart = [new StorageObjectItem(product.id, cartQuantity)]
+      newCart = [
+        new StorageObjectItem(
+          product.id,
+          product.name,
+          product.image_url,
+          cartQuantity
+        ),
+      ]
     }
 
     localStorage.setItem("cart", JSON.stringify(newCart))
@@ -71,11 +83,11 @@ export default function Product({ product }: ProductPageParams) {
     <div className="container flex flex-col mx-auto">
       <Breadcrumb page={"product"} path={product.name} />
       <div className="w-full flex justify-between gap-28">
-        <div className="bg-neutral-100 relative w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
+        <div className="bg-neutral-100 w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
           <Image
             loader={() => imagePath}
             src={imagePath}
-            width={500}
+            width={370}
             height={500}
             alt={product.name}
           />
@@ -87,7 +99,7 @@ export default function Product({ product }: ProductPageParams) {
             {product.description}
           </div>
           <div className="mt-6 flex justify-between items-center">
-            <div className="w-2/5 flex items-center font-medium">
+            <div className="flex items-center font-medium">
               <button
                 onClick={handleChangeItemClick}
                 className="hover:text-white border border-neutral-400 hover:border-red-600 hover:bg-red-600 w-10 h-11 rounded-l text-lg"
@@ -100,7 +112,7 @@ export default function Product({ product }: ProductPageParams) {
                 onChange={(event) =>
                   setCartQuantity(Number(event.target.value))
                 }
-                className="w-32 text-center border-y h-11 border-neutral-400"
+                className="w-20 text-center border-y h-11 border-neutral-400"
               />
               <button
                 onClick={handleChangeItemClick}
