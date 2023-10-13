@@ -7,7 +7,8 @@ import { Breadcrumb } from "@/components"
 import { ApiEnum } from "@/enums"
 import Image from "next/image"
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
+  //todo: fix type
   const productId = context.query.slug
 
   const response = await fetch(`${ApiEnum.BASE_PATH}/products?id=${productId}`)
@@ -27,8 +28,7 @@ export default function Product({ product }: ProductPageParams) {
   const imagePath = ApiEnum.BASE_PATH + product.image_url
 
   function addToCart() {
-    const storageCart = localStorage.getItem("cart") ?? "[]"
-    const actualCart: StorageItem[] = JSON.parse(storageCart)
+    const actualCart = cartUtils.getStorageCart()
 
     let newCart: StorageItem[]
 

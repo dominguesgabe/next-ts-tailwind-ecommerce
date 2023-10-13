@@ -1,6 +1,9 @@
 import { ApiEnum } from "@/enums"
+import { StorageObjectItem } from "@/factories"
 import { StorageItem } from "@/types"
+import { cartUtils } from "@/utils"
 import Image from "next/image"
+import { ChangeEvent, useState, useEffect } from "react"
 
 interface CartListingItemParams {
   product: StorageItem
@@ -9,6 +12,28 @@ interface CartListingItemParams {
 export function CartListingItem({ product }: CartListingItemParams) {
   const imagePath = ApiEnum.BASE_PATH + product.image_url
   const subtotal = (product.price * product.quantity).toFixed(2)
+  const [productQuantity, setProductQuantity] = useState(product.quantity)
+
+  // useEffect(() => {
+  //   const updatedProduct = new StorageObjectItem(
+  //     product.id,
+  //     product.name,
+  //     product.price,
+  //     product.image_url,
+  //     productQuantity
+  //   )
+
+  //   cartUtils.updateCart({})
+  // }, [productQuantity])
+
+  function handleChangeCartItem(event: ChangeEvent<HTMLInputElement>) {
+    const newQuantity = Number(event.target.value)
+
+    if (newQuantity > 0) {
+      setProductQuantity(newQuantity)
+    }
+  }
+
   return (
     <tr className="px-10 py-6 grid grid-cols-4 grid-flow-row items-center rounded drop-shadow bg-white">
       <td className="flex gap-x-4 items-center">
@@ -38,8 +63,9 @@ export function CartListingItem({ product }: CartListingItemParams) {
         <div className="relative w-16">
           <input
             className="border rounded w-16 py-2 pl-4 pr-5"
-            type="text"
-            defaultValue={product.quantity}
+            min={1}
+            onChange={handleChangeCartItem}
+            value={productQuantity}
           />
           <div className="h-8 w-6 absolute top-0 bottom-0 right-0 m-auto">
             <Image
@@ -48,6 +74,7 @@ export function CartListingItem({ product }: CartListingItemParams) {
               height={16}
               alt="Increase product quantity"
               className="rounded hover:bg-gray-100 cursor-pointer"
+              onClick={() => setProductQuantity(productQuantity + 1)}
             />
             <Image
               src={"/DropDownSmall.svg"}
@@ -55,6 +82,11 @@ export function CartListingItem({ product }: CartListingItemParams) {
               height={16}
               alt="Decrease product quantity"
               className="rounded hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                if (productQuantity - 1 > 0) {
+                  setProductQuantity(productQuantity - 1)
+                }
+              }}
             />
           </div>
         </div>
