@@ -1,8 +1,9 @@
 export class StorageObjectItem {
   constructor(
-    public productId: number,
-    public productName: string,
-    public imageUrl: string,
+    public id: number,
+    public name: string,
+    public price: number,
+    public image_url: string,
     public quantity: number
   ) {}
 }

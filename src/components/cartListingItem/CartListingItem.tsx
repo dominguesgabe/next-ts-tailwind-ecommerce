@@ -7,7 +7,8 @@ interface CartListingItemParams {
 }
 
 export function CartListingItem({ product }: CartListingItemParams) {
-  const imagePath = ApiEnum.BASE_PATH + product.imageUrl
+  const imagePath = ApiEnum.BASE_PATH + product.image_url
+  const subtotal = (product.price * product.quantity).toFixed(2)
   return (
     <tr className="px-10 py-6 grid grid-cols-4 grid-flow-row items-center rounded drop-shadow bg-white">
       <td className="flex gap-x-4 items-center">
@@ -17,7 +18,7 @@ export function CartListingItem({ product }: CartListingItemParams) {
             src={imagePath}
             width={38}
             height={28}
-            alt={product.productName}
+            alt={product.name}
           />
           {product.quantity === 1 && (
             <Image
@@ -30,9 +31,9 @@ export function CartListingItem({ product }: CartListingItemParams) {
             />
           )}
         </div>
-        <div>{product.productName}</div>
+        <div>{product.name}</div>
       </td>
-      <td className="text-center">$999</td>
+      <td className="text-center">${product.price}</td>
       <td className="flex justify-center">
         <div className="relative w-16">
           <input
@@ -58,7 +59,7 @@ export function CartListingItem({ product }: CartListingItemParams) {
           </div>
         </div>
       </td>
-      <td className="text-end">$100</td>
+      <td className="text-end">${subtotal}</td>
     </tr>
   )
 }

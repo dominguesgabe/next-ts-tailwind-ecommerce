@@ -4,19 +4,31 @@ import { Product, StorageItem } from "@/types"
 import Link from "next/link"
 
 export default function Cart() {
-  const [cartEmpty, setCartEmpty] = useState(false)
+  const [cartEmpty, setCartEmpty] = useState(true)
   const [cartItems, setCartItems] = useState<StorageItem[]>([])
+  const [subtotal, setSubtotal] = useState(0)
 
   useEffect(() => {
     const storageCart = localStorage.getItem("cart")
 
-    if (!storageCart) {
-      setCartEmpty(true)
+    if (storageCart) {
+      setCartEmpty(false)
     }
 
     const actualCart: StorageItem[] = JSON.parse(storageCart as string)
     setCartItems(actualCart)
   }, [])
+
+  useEffect(() => {
+    const initialValue = 0
+    const subtotal: number = cartItems.reduce(
+      (accumulator, cartItem) =>
+        accumulator + cartItem.price * cartItem.quantity,
+      initialValue
+    )
+
+    setSubtotal(Number(subtotal.toFixed(2)))
+  }, [cartEmpty])
 
   if (cartEmpty) return <CartEmpty />
 
@@ -34,7 +46,7 @@ export default function Cart() {
         </thead>
         <tbody className="space-y-10 mt-10">
           {cartItems.map((cartItem) => (
-            <CartListingItem product={cartItem} key={cartItem.productId} />
+            <CartListingItem product={cartItem} key={cartItem.id} />
           ))}
         </tbody>
       </table>
@@ -65,7 +77,7 @@ export default function Cart() {
           <div className="w-full mt-6 flex wrap flex-col divide-y">
             <div className="w-full flex justify-between py-4">
               <span>Subtotal</span>
-              <span>TROCAR</span>
+              <span>${subtotal}</span>
             </div>
             <div className="w-full flex justify-between items-center py-4">
               <span>Shipping:</span>
@@ -73,7 +85,7 @@ export default function Cart() {
             </div>
             <div className="w-full flex justify-between items-center py-4">
               <span>Total:</span>
-              <span>TROCAR</span>
+              <span>${subtotal}</span>
             </div>
           </div>
           <button className="w-64 py-4 text-white bg-red-600 rounded enabled:hover:bg-red-500">

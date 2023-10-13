@@ -11,7 +11,7 @@ function quantityModifier({
   targetProductId,
 }: QuantityModifierInputParams): StorageItem[] {
   return cart.map((cartItem) => {
-    if (cartItem.productId === targetProductId) {
+    if (cartItem.id === targetProductId) {
       return {
         ...cartItem,
         quantity: cartItem.quantity + newQuantity,

@@ -34,7 +34,7 @@ export default function Product({ product }: ProductPageParams) {
 
     if (actualCart.length) {
       const isItemAlreadyInCart = actualCart.some(
-        (item) => item.productId === product.id
+        (item) => item.id === product.id
       )
 
       if (isItemAlreadyInCart) {
@@ -49,6 +49,7 @@ export default function Product({ product }: ProductPageParams) {
           new StorageObjectItem(
             product.id,
             product.name,
+            product.price,
             product.image_url,
             cartQuantity
           ),
@@ -59,6 +60,7 @@ export default function Product({ product }: ProductPageParams) {
         new StorageObjectItem(
           product.id,
           product.name,
+          product.price,
           product.image_url,
           cartQuantity
         ),

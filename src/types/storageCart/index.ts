@@ -1,6 +1,7 @@
 export interface StorageItem {
-  productId: number
-  productName: string
-  imageUrl: string
+  id: number
+  name: string
+  price: number
+  image_url: string
   quantity: number
 }
