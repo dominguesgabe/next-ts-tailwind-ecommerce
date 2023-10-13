@@ -60,7 +60,7 @@ export default function Product({ product }: ProductPageParams) {
       ]
     }
 
-    localStorage.setItem("cart", JSON.stringify(newCart))
+    cartUtils.setStorageCart(newCart)
     setNewQuantity(1)
   }
 

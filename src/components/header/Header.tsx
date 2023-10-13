@@ -5,8 +5,8 @@ import Link from "next/link"
 export function Header() {
   return (
     <>
-      <PreHeader />
       <header className="border-b">
+        <PreHeader />
         <div className="container mx-auto pt-10 pb-4 flex justify-between gap-36">
           <div className="flex w-3/5 justify-between items-center">
             <h1>

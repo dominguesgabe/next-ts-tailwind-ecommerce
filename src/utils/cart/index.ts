@@ -1,35 +1,15 @@
 import { Product } from "@/types"
 
-//esse método está mudaddo a quantidade e montando novo carrinho, deve ser quebrado
-// interface QuantityModifierInputParams {
-//   cart: Product[]
-//   newQuantity: number
-//   targetProductId: number
-// }
-
-// function quantityModifier({
-//   cart,
-//   newQuantity,
-//   targetProductId,
-// }: QuantityModifierInputParams): Product[] {
-//   return cart.map((cartItem) => {
-//     if (cartItem.id === targetProductId) {
-//       return {
-//         ...cartItem,
-//         quantity: cartItem.quantity + newQuantity,
-//       }
-//     }
-
-//     return cartItem
-//   })
-// }
-
 function getStorageCart(): Product[] {
   const storageCart = localStorage.getItem("cart") ?? "[]"
   return JSON.parse(storageCart)
 }
 
-interface AddQuantityToItemProps {
+function setStorageCart(cart: Product[]) {
+  localStorage.setItem("cart", JSON.stringify(cart))
+}
+
+interface AddQuantityToItemParams {
   item: Product
   newQuantity: number
 }
@@ -37,10 +17,25 @@ interface AddQuantityToItemProps {
 function addQuantityToItem({
   item,
   newQuantity,
-}: AddQuantityToItemProps): Product {
+}: AddQuantityToItemParams): Product {
   return {
     ...item,
     quantity: item.quantity + newQuantity,
+  }
+}
+
+interface ModifyItemQuantityParams {
+  product: Product
+  newQuantity: number
+}
+
+function modifyItemQuantity({
+  product,
+  newQuantity,
+}: ModifyItemQuantityParams): Product {
+  return {
+    ...product,
+    quantity: newQuantity,
   }
 }
 
@@ -61,8 +56,23 @@ function replaceExistingItem({
   })
 }
 
+interface RemoveExistingItemParams {
+  cart: Product[]
+  item: Product
+}
+
+function removeExistingItem({
+  cart,
+  item,
+}: RemoveExistingItemParams): Product[] {
+  return cart.filter((cartItem) => cartItem.id !== item.id)
+}
+
 export const cartUtils = {
   getStorageCart,
+  setStorageCart,
   addQuantityToItem,
+  modifyItemQuantity,
   replaceExistingItem,
+  removeExistingItem,
 }

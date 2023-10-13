@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Breadcrumb, CartEmpty, CartListingItem } from "@/components"
 import { Product } from "@/types"
 import Link from "next/link"
+import { cartUtils } from "@/utils"
 
 export default function Cart() {
   const [cartEmpty, setCartEmpty] = useState(true)
@@ -20,10 +21,6 @@ export default function Cart() {
     setCartItems(actualCart)
   }, [])
 
-  // useEffect(() => {
-  //   console.log(cartItems)
-  // }, [cartItems])
-
   useEffect(() => {
     const initialValue = 0
     const subtotal: number = cartItems.reduce(
@@ -33,7 +30,11 @@ export default function Cart() {
     )
 
     setSubtotal(Number(subtotal.toFixed(2)))
-  }, [cartEmpty])
+
+    if (cartItems.length) {
+      cartUtils.setStorageCart(cartItems)
+    }
+  }, [cartItems])
 
   if (cartEmpty) return <CartEmpty />
 
@@ -51,7 +52,12 @@ export default function Cart() {
         </thead>
         <tbody className="space-y-10 mt-10">
           {cartItems.map((cartItem) => (
-            <CartListingItem product={cartItem} key={cartItem.id} />
+            <CartListingItem
+              product={cartItem}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              key={cartItem.id}
+            />
           ))}
         </tbody>
       </table>

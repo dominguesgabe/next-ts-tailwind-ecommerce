@@ -2,7 +2,6 @@ import { Footer, Header } from "@/components"
 import "@/styles/globals.css"
 import type { AppProps } from "next/app"
 import { Poppins } from "next/font/google"
-import Head from "next/head"
 import React from "react"
 
 const poppins = Poppins({

@@ -9,26 +9,53 @@ import { ApiEnum } from "@/enums"
 import { Product } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
+import { cartUtils } from "@/utils"
 
 interface CartListingItemParams {
   product: Product
+  cartItems: Product[]
+  setCartItems: Dispatch<SetStateAction<Product[]>>
 }
 
-export function CartListingItem({ product }: CartListingItemParams) {
+export function CartListingItem({
+  product,
+  cartItems,
+  setCartItems,
+}: CartListingItemParams) {
   const imagePath = ApiEnum.BASE_PATH + product.image_url
   const subtotal = (product.price * product.quantity).toFixed(2)
   const [productQuantity, setProductQuantity] = useState(product.quantity)
 
-  // useEffect(() => {
-  //   setCartItems([product])
-  // }, [productQuantity])
+  useEffect(() => {
+    if (!productQuantity) return
+
+    const updatedItem = cartUtils.modifyItemQuantity({
+      product: product,
+      newQuantity: productQuantity,
+    })
+    const updatedCart = cartUtils.replaceExistingItem({
+      cart: cartItems,
+      item: updatedItem,
+    })
+
+    setCartItems(updatedCart)
+  }, [productQuantity])
 
   function handleChangeCartItem(event: ChangeEvent<HTMLInputElement>) {
     const newQuantity = Number(event.target.value)
 
     if (newQuantity > 0) {
-      // setProductQuantity(newQuantity)
+      setProductQuantity(newQuantity)
     }
+  }
+
+  function handleRemoveCartItem() {
+    const updatedCart = cartUtils.removeExistingItem({
+      cart: cartItems,
+      item: product,
+    })
+    console.log(updatedCart)
+    setCartItems(updatedCart)
   }
 
   return (
@@ -51,7 +78,7 @@ export function CartListingItem({ product }: CartListingItemParams) {
               height={28}
               alt="Remove product"
               className="absolute -top-2 -left-2 hover:cursor-pointer"
-              onClick={() => alert("remove item")}
+              onClick={handleRemoveCartItem}
             />
           )}
         </div>
