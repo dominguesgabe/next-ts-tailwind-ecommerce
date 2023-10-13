@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { Product } from "@/types"
 import { MainBanner, Listing, LimitedTimeOffer } from "@/components"
+import { ApiEnum } from "@/enums"
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3004/products?_page=1&_limit=4")
+  const res = await fetch(`${ApiEnum.BASE_PATH}/products?_page=1&_limit=4`)
   const products = await res.json()
 
   return { props: { data: products } }

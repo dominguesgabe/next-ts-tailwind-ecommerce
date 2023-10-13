@@ -12,7 +12,7 @@ export function ListingItem({ product }: ListingItemParams) {
   return (
     <li className="mb-8">
       <Link href={`/product/${product.id}`}>
-        <div className="bg-neutral-100 relative w-72 h-80 aspect-square rounded flex justify-center items-center hover:opacity-90">
+        <div className="bg-neutral-100 relative w-72 2xl:w-80 h-80 aspect-square rounded flex justify-center items-center hover:opacity-90">
           <Image
             loader={() => imagePath}
             src={imagePath}

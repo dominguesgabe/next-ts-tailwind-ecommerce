@@ -15,9 +15,9 @@ export function Header() {
             <nav>
               <ul className="flex gap-12">
                 <li>
-                  <a href="#" className="border-b border-slate-300">
+                  <Link href="/" className="border-b border-slate-300">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="hover:border-b border-slate-300">

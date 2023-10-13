@@ -10,7 +10,7 @@ import Image from "next/image"
 export async function getServerSideProps(context) {
   const productId = context.query.slug
 
-  const response = await fetch(`http://localhost:3004/products?id=${productId}`)
+  const response = await fetch(`${ApiEnum.BASE_PATH}/products?id=${productId}`)
 
   const product = await response.json()
 

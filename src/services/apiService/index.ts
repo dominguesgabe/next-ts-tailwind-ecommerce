@@ -1,6 +1,7 @@
+import { ApiEnum } from "@/enums"
 import { Product } from "@/types"
 
-const apiBasePath = "http://localhost:3004/products"
+const apiBasePath = `${ApiEnum.BASE_PATH}/products`
 
 async function getRequestCore(queryParams: string): Promise<Product[]> {
   const data = await fetch(apiBasePath + queryParams)
