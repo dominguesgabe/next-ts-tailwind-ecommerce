@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { Breadcrumb, CartEmpty, CartListingItem } from "@/components"
-import { Product, StorageItem } from "@/types"
+import { Product } from "@/types"
 import Link from "next/link"
 
 export default function Cart() {
   const [cartEmpty, setCartEmpty] = useState(true)
-  const [cartItems, setCartItems] = useState<StorageItem[]>([])
+  const [cartItems, setCartItems] = useState<Product[]>([])
   const [subtotal, setSubtotal] = useState(0)
 
   useEffect(() => {
@@ -15,9 +15,14 @@ export default function Cart() {
       setCartEmpty(false)
     }
 
-    const actualCart: StorageItem[] = JSON.parse(storageCart as string)
+    const actualCart: Product[] = JSON.parse(storageCart as string)
+
     setCartItems(actualCart)
   }, [])
+
+  // useEffect(() => {
+  //   console.log(cartItems)
+  // }, [cartItems])
 
   useEffect(() => {
     const initialValue = 0

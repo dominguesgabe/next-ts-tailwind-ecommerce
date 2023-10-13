@@ -1,12 +1,17 @@
+import {
+  ChangeEvent,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react"
 import { ApiEnum } from "@/enums"
-import { StorageObjectItem } from "@/factories"
-import { StorageItem } from "@/types"
-import { cartUtils } from "@/utils"
+import { Product } from "@/types"
 import Image from "next/image"
-import { ChangeEvent, useState, useEffect } from "react"
+import Link from "next/link"
 
 interface CartListingItemParams {
-  product: StorageItem
+  product: Product
 }
 
 export function CartListingItem({ product }: CartListingItemParams) {
@@ -15,22 +20,14 @@ export function CartListingItem({ product }: CartListingItemParams) {
   const [productQuantity, setProductQuantity] = useState(product.quantity)
 
   // useEffect(() => {
-  //   const updatedProduct = new StorageObjectItem(
-  //     product.id,
-  //     product.name,
-  //     product.price,
-  //     product.image_url,
-  //     productQuantity
-  //   )
-
-  //   cartUtils.updateCart({})
+  //   setCartItems([product])
   // }, [productQuantity])
 
   function handleChangeCartItem(event: ChangeEvent<HTMLInputElement>) {
     const newQuantity = Number(event.target.value)
 
     if (newQuantity > 0) {
-      setProductQuantity(newQuantity)
+      // setProductQuantity(newQuantity)
     }
   }
 
@@ -38,13 +35,15 @@ export function CartListingItem({ product }: CartListingItemParams) {
     <tr className="px-10 py-6 grid grid-cols-4 grid-flow-row items-center rounded drop-shadow bg-white">
       <td className="flex gap-x-4 items-center">
         <div className="relative">
-          <Image
-            loader={() => imagePath}
-            src={imagePath}
-            width={38}
-            height={28}
-            alt={product.name}
-          />
+          <Link href={`/product/${product.id}`} className="cursor-pointer">
+            <Image
+              loader={() => imagePath}
+              src={imagePath}
+              width={38}
+              height={28}
+              alt={product.name}
+            />
+          </Link>
           {product.quantity === 1 && (
             <Image
               src={"/CancelItem.svg"}

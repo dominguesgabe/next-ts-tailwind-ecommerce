@@ -1,18 +1,15 @@
 import { useState, MouseEvent } from "react"
 import { Product } from "@/types"
-import { StorageObjectItem } from "@/factories"
-import { StorageItem } from "@/types"
 import { cartUtils } from "@/utils"
 import { Breadcrumb } from "@/components"
 import { ApiEnum } from "@/enums"
 import Image from "next/image"
 
 export async function getServerSideProps(context: any) {
-  //todo: fix type
+  //todo: fix context type
   const productId = context.query.slug
 
   const response = await fetch(`${ApiEnum.BASE_PATH}/products?id=${productId}`)
-
   const product = await response.json()
 
   if (!product[0]) return { notFound: true }
@@ -24,51 +21,47 @@ interface ProductPageParams {
 }
 
 export default function Product({ product }: ProductPageParams) {
-  const [cartQuantity, setCartQuantity] = useState(1)
+  const [newQuantity, setNewQuantity] = useState(1)
   const imagePath = ApiEnum.BASE_PATH + product.image_url
 
   function addToCart() {
     const actualCart = cartUtils.getStorageCart()
 
-    let newCart: StorageItem[]
+    let newCart: Product[]
 
     if (actualCart.length) {
-      const isItemAlreadyInCart = actualCart.some(
-        (item) => item.id === product.id
-      )
+      const actualItemInCart = actualCart.find((item) => item.id === product.id)
 
-      if (isItemAlreadyInCart) {
-        newCart = cartUtils.quantityModifier({
+      if (actualItemInCart) {
+        const newItem = cartUtils.addQuantityToItem({
+          item: actualItemInCart,
+          newQuantity,
+        })
+
+        newCart = cartUtils.replaceExistingItem({
           cart: actualCart,
-          targetProductId: product.id,
-          newQuantity: cartQuantity,
+          item: newItem,
         })
       } else {
         newCart = [
           ...actualCart,
-          new StorageObjectItem(
-            product.id,
-            product.name,
-            product.price,
-            product.image_url,
-            cartQuantity
-          ),
+          {
+            ...product,
+            quantity: newQuantity,
+          },
         ]
       }
     } else {
       newCart = [
-        new StorageObjectItem(
-          product.id,
-          product.name,
-          product.price,
-          product.image_url,
-          cartQuantity
-        ),
+        {
+          ...product,
+          quantity: newQuantity,
+        },
       ]
     }
 
     localStorage.setItem("cart", JSON.stringify(newCart))
-    setCartQuantity(1)
+    setNewQuantity(1)
   }
 
   function handleChangeItemClick(event: MouseEvent<HTMLButtonElement>) {
@@ -76,8 +69,8 @@ export default function Product({ product }: ProductPageParams) {
     const clickedButton = event.target as HTMLButtonElement
     const operator = clickedButton.innerText
 
-    if (cartQuantity > 1 || operator !== "-") {
-      setCartQuantity(eval(cartQuantity + operator + 1))
+    if (newQuantity > 1 || operator !== "-") {
+      setNewQuantity(eval(newQuantity + operator + 1))
     }
   }
 
@@ -109,11 +102,9 @@ export default function Product({ product }: ProductPageParams) {
                 -
               </button>
               <input
-                value={cartQuantity}
+                value={newQuantity}
                 min={1}
-                onChange={(event) =>
-                  setCartQuantity(Number(event.target.value))
-                }
+                onChange={(event) => setNewQuantity(Number(event.target.value))}
                 className="w-20 text-center border-y h-11 border-neutral-400"
               />
               <button
