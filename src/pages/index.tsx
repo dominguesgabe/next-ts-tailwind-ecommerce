@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Product } from "@/types"
 import { MainBanner, Listing, LimitedTimeOffer } from "@/components"
 import { ApiEnum } from "@/enums"
+import Head from "next/head"
 
 export async function getServerSideProps() {
   const res = await fetch(`${ApiEnum.BASE_PATH}/products?_page=1&_limit=4`)
@@ -17,10 +18,16 @@ export default function Home({ data }: HomeProps) {
   const [products, setProducts] = useState<Product[]>(data)
 
   return (
-    <div className="container mx-auto mt-10">
-      <MainBanner />
-      <Listing products={products} setProducts={setProducts} />
-      <LimitedTimeOffer />
-    </div>
+    <>
+      <Head>
+        <title>Exclusive E-commerce</title>
+        <meta name="keywords" content="Buy, Products, exclusive, Shopping" />
+      </Head>
+      <div className="container mx-auto mt-10">
+        <MainBanner />
+        <Listing products={products} setProducts={setProducts} />
+        <LimitedTimeOffer />
+      </div>
+    </>
   )
 }
