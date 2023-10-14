@@ -81,7 +81,12 @@ export default function Product({
     <>
       <Head>
         <title>{product.name}</title>
-        <meta name="keywords" content={product.name} />
+        <meta
+          property="og:title"
+          name={product.name}
+          content="Buy, Products, exclusive, Shopping"
+        />
+        <meta name="description" content={product.description} />
       </Head>
       <div className="container flex flex-col mx-auto px-2 sm:px-0">
         <Breadcrumb page={"product"} path={product.name} />
