@@ -26,7 +26,7 @@ export default function Search({
         <title>Search products</title>
         <meta name="keywords" content="Buy, Products, exclusive, Shopping" />
       </Head>
-      <div className="container mx-auto mt-10 flex flex-col gap-4">
+      <div className="container mx-auto px-2 sm:px-0 mt-10 flex flex-col gap-4">
         <div className="min-h-[600px]">
           <h1 className="text-xl font-medium">
             We found {products.length} result{products.length !== 1 ? "s" : ""}{" "}

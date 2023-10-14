@@ -80,10 +80,10 @@ export default function Product({ product }: ProductPageParams) {
         <title>{product.name}</title>
         <meta name="keywords" content={product.name} />
       </Head>
-      <div className="container flex flex-col mx-auto">
+      <div className="container flex flex-col mx-auto px-2 sm:px-0">
         <Breadcrumb page={"product"} path={product.name} />
-        <div className="w-full flex justify-between gap-28">
-          <div className="bg-neutral-100 w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
+        <div className="w-full flex justify-between flex-col xl:flex-row gap-20 xl:gap-28">
+          <div className="bg-neutral-100 w-full xl:w-3/5 h-[600px] aspect-square rounded flex justify-center items-center">
             <Image
               loader={() => imagePath}
               src={imagePath}
@@ -92,8 +92,10 @@ export default function Product({ product }: ProductPageParams) {
               alt={product.name}
             />
           </div>
-          <div className="w-2/5 ">
-            <h1 className="mt-16 font-semibold text-2xl">{product.name}</h1>
+          <div className="w-full xl:w-2/5">
+            <h1 className="mt-0 xl:mt-16 font-semibold text-2xl">
+              {product.name}
+            </h1>
             <div className="text-2xl mt-14">${product.price}</div>
             <div className="mt-6 text-sm pb-6 border-b border-neutral-400">
               {product.description}

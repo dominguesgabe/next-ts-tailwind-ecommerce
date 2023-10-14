@@ -3,13 +3,15 @@ import Image from "next/image"
 export function LimitedTimeOffer() {
   return (
     <div className="mt-20 relative">
-      <Image
-        src={"/BoomboxBanner.png"}
-        width={1536}
-        height={500}
-        alt="Buy this limited time offer"
-      />
-      <div className="space-y-8 absolute top-0 bottom-0 left-14 m-auto h-96">
+      <div className="h-[550px] lg:h-min bg-black">
+        <Image
+          src={"/BoomboxBanner.png"}
+          width={1536}
+          height={500}
+          alt="Buy this limited time offer"
+        />
+      </div>
+      <div className="space-y-8 absolute top-0 bottom-0 right-0 left-5 lg:left-14 m-auto h-96">
         <span className="text-green-500">Categories</span>
         <div className=" font-semibold text-5xl text-white max-w-md">
           Enhance Your Music Experience

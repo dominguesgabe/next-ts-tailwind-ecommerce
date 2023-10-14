@@ -17,7 +17,7 @@ export function Listing({ products, setProducts }: ListingParams) {
     setNextApiPage(nextApiPage + 1)
   }
   return (
-    <section className="mt-36">
+    <section className="mt-20 md:mt-36">
       <ListingTitle />
       <div className="mt-16">
         <ul className="flex justify-between flex-wrap">

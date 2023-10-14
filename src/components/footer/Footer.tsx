@@ -4,11 +4,11 @@ import Image from "next/image"
 export function Footer() {
   return (
     <footer className="w-full bg-black text-white mt-36 pt-20 pb-6">
-      <div className="container mx-auto flex justify-between">
-        <div>
+      <div className="container flex-col sm:flex-row flex-wrap xl:flex-nowrap mx-auto px-2 md:px-0 flex justify-between gap-y-5">
+        <div className="w-2/4">
           <Logo className="invert" />
           <h2 className="font-medium my-6 text-xl">Subscribe</h2>
-          <div className=" w-56">
+          <div className="w-56">
             <label htmlFor="subscribe">Get 10% off your first order</label>
 
             <div className="relative">
@@ -28,7 +28,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div>
+        <div className="w-2/4">
           <h2 className="font-medium mb-6 text-xl">Support</h2>
           <ul className="space-y-4">
             <li>
@@ -40,7 +40,7 @@ export function Footer() {
             <li>+88015-88888-9999</li>
           </ul>
         </div>
-        <div>
+        <div className="w-2/4 mt-4 lg:mt-0">
           <h2 className="font-medium mb-6 text-xl">Account</h2>
           <ul className="space-y-4">
             <li>
@@ -60,7 +60,7 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div>
+        <div className="w-2/4 mt-4 lg:mt-0">
           <h2 className="font-medium mb-6 text-xl">Quick Link</h2>
           <ul className="space-y-4">
             <li>
@@ -77,12 +77,12 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div>
+        <div className="w-2/4 mt-4 lg:mt-0">
           <h2 className="mb-6">Download App</h2>
           <span className="text-xs text-gray-400">
             Save $3 with App New User Only
           </span>
-          <div className="mt-2 grid grid-cols-[40%,60%] grid-rows-2 gap-x-2">
+          <div className="mt-2 grid grid-cols-[40%,60%] grid-rows-2 gap-x-2 lg:mt-4">
             <Image
               src={"/DownloadQR.svg"}
               width={80}

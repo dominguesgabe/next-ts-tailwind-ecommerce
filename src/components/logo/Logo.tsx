@@ -12,7 +12,7 @@ export function Logo({ className }: LogoProps = { className: "" }) {
         src={"/Logo.svg"}
         width={128}
         height={24}
-        alt="Exclusive"
+        alt="Exclusive E-commerce"
         className={className}
       />
     </Link>

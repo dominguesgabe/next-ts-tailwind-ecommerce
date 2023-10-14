@@ -28,13 +28,13 @@ export function Header() {
     <>
       <header className="border-b">
         <PreHeader />
-        <div className="container mx-auto pt-10 pb-4 flex justify-between gap-36">
-          <div className="flex w-3/5 justify-between items-center">
+        <div className="container mx-auto px-2 lg:px-0 pb-4 pt-10 flex justify-between gap-36">
+          <div className="flex lg:w-2/4 xl:w-3/5 justify-between items-center">
             <h1>
               <Logo />
             </h1>
-            <nav>
-              <ul className="flex gap-12">
+            <nav className="hidden lg:block">
+              <ul className="flex gap-4 xl:gap-12">
                 <li>
                   <Link
                     href="/"
@@ -61,8 +61,8 @@ export function Header() {
               </ul>
             </nav>
           </div>
-          <div className="flex w-2/5 justify-between">
-            <div className="relative w-72">
+          <div className="flex lg:lg:w-2/4 xl:w-2/5 justify-between">
+            <div className="relative w-72 hidden lg:block">
               <input
                 className="peer h-full w-72 rounded py-2 px-5 bg-neutral-100 outline-0 relative text-sm"
                 placeholder="What are you looking for?"
@@ -84,6 +84,16 @@ export function Header() {
               </Link>
             </div>
             <div className=" flex justify-center items-center gap-5">
+              <div className="block lg:hidden">
+                <Image
+                  src={"/Search.svg"}
+                  width={32}
+                  height={32}
+                  alt="Search for products"
+                  onClick={() => alert("should open search")}
+                  className="bg-neutral-100 rounded"
+                />
+              </div>
               <a href="#" className="relative">
                 <Image
                   src={"/Wishlist.svg"}
@@ -91,7 +101,7 @@ export function Header() {
                   height={32}
                   alt="See your Wishlist"
                 />
-                <div className="text-white bg-red-600 w-5 h-5 rounded-full absolute -top-1 -right-1 z-10 flex justify-center items-center">
+                <div className="text-white bg-red-600 text-[0] w-2 h-2 lg:w-5 lg:h-5 lg:text-base top-0 right-0 rounded-full absolute lg:-top-1 lg:-right-1 z-10 flex justify-center items-center">
                   4
                 </div>
               </a>
@@ -104,8 +114,8 @@ export function Header() {
                     alt="See your cart"
                   />
                 </Link>
-                {cartItems && (
-                  <div className="text-white bg-red-600 w-5 h-5 rounded-full absolute -top-1 -right-1 z-10 flex justify-center items-center">
+                {cartItems > 0 && (
+                  <div className="text-white bg-red-600 text-[0] w-2 h-2 lg:w-5 lg:h-5 lg:text-base top-0 right-0 rounded-full absolute lg:-top-1 lg:-right-1 z-10 flex justify-center items-center">
                     {cartItems}
                   </div>
                 )}
