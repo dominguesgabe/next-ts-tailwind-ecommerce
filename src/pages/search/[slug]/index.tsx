@@ -1,9 +1,8 @@
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import { ListingItem } from "@/components"
 import { ApiEnum } from "@/enums"
 import { Product } from "@/types"
 import Link from "next/link"
-
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import Head from "next/head"
 
 export const getServerSideProps = (async (context) => {
@@ -12,7 +11,7 @@ export const getServerSideProps = (async (context) => {
   const response = await fetch(
     `${ApiEnum.BASE_PATH}/products?name_like=${query}`
   )
-  const products = await response.json()
+  const products: Product[] = await response.json()
 
   return { props: { products } }
 }) satisfies GetServerSideProps<{ products: Product[] }>

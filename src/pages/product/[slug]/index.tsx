@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/components"
 import { ApiEnum } from "@/enums"
 import Image from "next/image"
 import Head from "next/head"
+import { useRouter } from "next/router"
 
 export async function getServerSideProps(context: any) {
   const productId = context.query.slug
@@ -23,8 +24,9 @@ interface ProductPageParams {
 export default function Product({ product }: ProductPageParams) {
   const [newQuantity, setNewQuantity] = useState(1)
   const imagePath = ApiEnum.BASE_PATH + product.image_url
+  const router = useRouter()
 
-  function addToCart() {
+  function handleAddToCart() {
     const actualCart = cartUtils.getStorageCart()
 
     let newCart: Product[]
@@ -62,6 +64,7 @@ export default function Product({ product }: ProductPageParams) {
 
     cartUtils.setStorageCart(newCart)
     setNewQuantity(1)
+    router.push(`/product/${product.id}`)
   }
 
   function handleChangeItemClick(event: MouseEvent<HTMLButtonElement>) {
@@ -125,7 +128,7 @@ export default function Product({ product }: ProductPageParams) {
               </div>
               <div className="w-2/5">
                 <button
-                  onClick={addToCart}
+                  onClick={handleAddToCart}
                   className="w-full h-11 bg-red-600 text-white hover:bg-red-400 rounded"
                 >
                   Add to cart

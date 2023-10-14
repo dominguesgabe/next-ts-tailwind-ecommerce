@@ -15,14 +15,11 @@ export function Header() {
     router.route === "/" ? setIsHome(true) : setIsHome(false)
   }, [router])
 
-  //todo: fix
   useEffect(() => {
     const cartItems = cartUtils.getStorageCart()
 
-    if (cartItems.length) {
-      setcartItems(cartItems.length)
-    }
-  })
+    setcartItems(cartItems.length)
+  }, [router.query])
 
   return (
     <>

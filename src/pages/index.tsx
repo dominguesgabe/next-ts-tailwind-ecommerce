@@ -21,7 +21,11 @@ export default function Home({ data }: HomeProps) {
     <>
       <Head>
         <title>Exclusive E-commerce</title>
-        <meta name="keywords" content="Buy, Products, exclusive, Shopping" />
+        <meta
+          property="og:title"
+          name="description"
+          content="Buy, Products, exclusive, Shopping"
+        />
       </Head>
       <div className="container mx-auto mt-10 px-2 sm:px-0">
         <MainBanner />

@@ -10,6 +10,7 @@ import { Product } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
 import { cartUtils } from "@/utils"
+import { NextRouter } from "next/router"
 
 interface CartListingItemParams {
   product: Product

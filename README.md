@@ -24,11 +24,3 @@ npm run dev
 ```
 
 3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the main page.
-
-### Running tests
-
-The main features are covered with end 2 end tests, using Cypress. You can execute them on your terminal running:
-
-```bash
-npm run test
-```
