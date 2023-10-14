@@ -23,7 +23,7 @@ export default function Home({ data }: HomeProps) {
         <title>Exclusive E-commerce</title>
         <meta name="keywords" content="Buy, Products, exclusive, Shopping" />
       </Head>
-      <div className="container mx-auto mt-10">
+      <div className="container mx-auto mt-10 px-2 sm:px-0">
         <MainBanner />
         <Listing products={products} setProducts={setProducts} />
         <LimitedTimeOffer />

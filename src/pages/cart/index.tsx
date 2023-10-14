@@ -34,7 +34,7 @@ export default function Cart() {
   if (cartEmpty) return <CartEmpty />
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-2 sm:px-0">
       <Breadcrumb page="cart" path="Cart" />
       <table className="w-full flex flex-wrap flex-col">
         <thead>
@@ -67,7 +67,7 @@ export default function Cart() {
           Update Cart
         </button>
       </div>
-      <div className="mt-20 flex justify-between">
+      <div className="mt-20 flex flex-col md:flex-row justify-between">
         <div className="flex h-14 gap-x-4">
           <input
             className="py-4 px-6 border rounded"
@@ -78,7 +78,7 @@ export default function Cart() {
             Apply Coupon
           </button>
         </div>
-        <div className="w-2/4 max-w-2xl px-6 py-8 border border-black rounded flex items-center flex-col flex-wrap">
+        <div className="w-full md:w-2/4 max-w-2xl px-6 py-8 border border-black rounded flex items-center flex-col flex-wrap mt-10 md:mt-0">
           <div className="w-full font-medium text-xl">Cart Total</div>
           <div className="w-full mt-6 flex wrap flex-col divide-y">
             <div className="w-full flex justify-between py-4">
