@@ -54,7 +54,7 @@ export function CartListingItem({
       cart: cartItems,
       item: product,
     })
-    console.log(updatedCart)
+
     setCartItems(updatedCart)
   }
 

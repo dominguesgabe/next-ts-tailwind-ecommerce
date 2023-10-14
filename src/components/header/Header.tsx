@@ -9,6 +9,7 @@ export function Header() {
   const [isHome, setIsHome] = useState(false)
   const [cartItems, setcartItems] = useState(0)
   const router = useRouter()
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     router.route === "/" ? setIsHome(true) : setIsHome(false)
@@ -62,17 +63,25 @@ export function Header() {
           </div>
           <div className="flex w-2/5 justify-between">
             <div className="relative w-72">
-              <Image
-                src={"/Search.svg"}
-                width={24}
-                height={24}
-                alt="Search for products"
-                className="absolute z-10 top-2/4 right-3 grid -translate-y-2/4 place-items-center"
-              />
               <input
                 className="peer h-full w-72 rounded py-2 px-5 bg-neutral-100 outline-0 relative text-sm"
                 placeholder="What are you looking for?"
+                value={search}
+                onKeyUp={(event) => {
+                  if (event.key === "Enter")
+                    return router.push(`/search/${search}`)
+                }}
+                onChange={(event) => setSearch(event.target.value)}
               />
+              <Link href={`/search/${search}`}>
+                <Image
+                  src={"/Search.svg"}
+                  width={24}
+                  height={24}
+                  alt="Search for products"
+                  className="absolute z-10 top-2/4 right-3 grid -translate-y-2/4 place-items-center hover:cursor-pointer"
+                />
+              </Link>
             </div>
             <div className=" flex justify-center items-center gap-5">
               <a href="#" className="relative">
