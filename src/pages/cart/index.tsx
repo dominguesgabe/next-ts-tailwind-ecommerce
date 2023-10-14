@@ -65,10 +65,10 @@ export default function Cart() {
             ))}
           </tbody>
         </table>
-        <div className="mt-6 flex justify-between">
+        <div className="mt-6 flex justify-between gap-2">
           <Link
             href={"/"}
-            className="py-4 px-12 bg-white border rounded hover:border-gray-900 font-medium"
+            className="py-4 px-12 bg-white border rounded hover:border-gray-900 font-medium text-center"
           >
             Return To Shop
           </Link>
@@ -76,18 +76,18 @@ export default function Cart() {
             Update Cart
           </button>
         </div>
-        <div className="mt-20 flex flex-col md:flex-row justify-between">
+        <div className="mt-20 flex flex-col lg:flex-row justify-between">
           <div className="flex h-14 gap-x-4">
             <input
-              className="py-4 px-6 border rounded"
+              className="py-4 px-6 border rounded w-full md:w-64"
               type="text"
               placeholder="Coupon Code"
             />
-            <button className="py-4 px-12 text-white bg-red-600 rounded enabled:hover:bg-red-500">
+            <button className="py-4 px-12 text-white bg-red-600 rounded enabled:hover:bg-red-500 flex items-center">
               Apply Coupon
             </button>
           </div>
-          <div className="w-full md:w-2/4 max-w-2xl px-6 py-8 border border-black rounded flex items-center flex-col flex-wrap mt-10 md:mt-0">
+          <div className="w-full lg:w-2/4 max-w-2xl px-6 py-8 border border-black rounded flex items-center flex-col flex-wrap mt-10 lg:mt-0">
             <div className="w-full font-medium text-xl">Cart Total</div>
             <div className="w-full mt-6 flex wrap flex-col divide-y">
               <div className="w-full flex justify-between py-4">
