@@ -32,7 +32,7 @@ export default function Cart() {
     setSubtotal(Number(subtotal.toFixed(2)))
 
     cartUtils.setStorageCart(cartItems)
-    router.push("/cart")
+    router.push("/cart", "cart", { scroll: false })
   }, [cartItems])
 
   if (cartEmpty) return <CartEmpty />

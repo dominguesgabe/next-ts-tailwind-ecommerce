@@ -1,3 +1,4 @@
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import { useState, MouseEvent } from "react"
 import { Product } from "@/types"
 import { cartUtils } from "@/utils"
@@ -7,7 +8,7 @@ import Image from "next/image"
 import Head from "next/head"
 import { useRouter } from "next/router"
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps = (async (context) => {
   const productId = context.query.slug
 
   const response = await fetch(`${ApiEnum.BASE_PATH}/products?id=${productId}`)
@@ -16,12 +17,11 @@ export async function getServerSideProps(context: any) {
   if (!product[0]) return { notFound: true }
 
   return { props: { product: product[0] } }
-}
-interface ProductPageParams {
-  product: Product
-}
+}) satisfies GetServerSideProps<{ product: Product }>
 
-export default function Product({ product }: ProductPageParams) {
+export default function Product({
+  product,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [newQuantity, setNewQuantity] = useState(1)
   const imagePath = ApiEnum.BASE_PATH + product.image_url
   const router = useRouter()

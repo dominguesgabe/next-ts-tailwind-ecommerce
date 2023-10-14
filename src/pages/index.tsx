@@ -1,20 +1,20 @@
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next"
 import { useState } from "react"
 import { Product } from "@/types"
 import { MainBanner, Listing, LimitedTimeOffer } from "@/components"
 import { ApiEnum } from "@/enums"
 import Head from "next/head"
 
-export async function getServerSideProps() {
-  const res = await fetch(`${ApiEnum.BASE_PATH}/products?_page=1&_limit=4`)
-  const products = await res.json()
+export const getServerSideProps = (async () => {
+  const response = await fetch(`${ApiEnum.BASE_PATH}/products?_page=1&_limit=4`)
+  const products: Product[] = await response.json()
 
   return { props: { data: products } }
-}
-interface HomeProps {
-  data: Product[]
-}
+}) satisfies GetServerSideProps<{ data: Product[] }>
 
-export default function Home({ data }: HomeProps) {
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [products, setProducts] = useState<Product[]>(data)
 
   return (
