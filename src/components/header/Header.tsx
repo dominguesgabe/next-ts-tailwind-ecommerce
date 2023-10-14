@@ -104,7 +104,7 @@ export function Header() {
                     alt="See your cart"
                   />
                 </Link>
-                {cartItems && (
+                {cartItems > 0 && (
                   <div className="text-white bg-red-600 w-5 h-5 rounded-full absolute -top-1 -right-1 z-10 flex justify-center items-center">
                     {cartItems}
                   </div>

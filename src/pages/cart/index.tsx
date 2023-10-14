@@ -10,20 +10,17 @@ export default function Cart() {
   const [subtotal, setSubtotal] = useState(0)
 
   useEffect(() => {
-    const storageCart = localStorage.getItem("cart")
+    const storageCart = cartUtils.getStorageCart()
 
-    if (storageCart) {
+    if (storageCart && storageCart.length) {
       setCartEmpty(false)
+      setCartItems(storageCart)
     }
-
-    const actualCart: Product[] = JSON.parse(storageCart as string)
-
-    setCartItems(actualCart)
   }, [])
 
   useEffect(() => {
     const initialValue = 0
-    const subtotal: number = cartItems.reduce(
+    const subtotal = cartItems.reduce(
       (accumulator, cartItem) =>
         accumulator + cartItem.price * cartItem.quantity,
       initialValue
@@ -31,9 +28,7 @@ export default function Cart() {
 
     setSubtotal(Number(subtotal.toFixed(2)))
 
-    if (cartItems.length) {
-      cartUtils.setStorageCart(cartItems)
-    }
+    cartUtils.setStorageCart(cartItems)
   }, [cartItems])
 
   if (cartEmpty) return <CartEmpty />
