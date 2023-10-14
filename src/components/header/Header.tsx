@@ -1,12 +1,29 @@
 import { PreHeader, Logo } from "@/components"
+import { cartUtils } from "@/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function Header() {
+  const [isHome, setIsHome] = useState(false)
+  const [cartItems, setcartItems] = useState(0)
   const router = useRouter()
   const [search, setSearch] = useState("")
+
+  useEffect(() => {
+    router.route === "/" ? setIsHome(true) : setIsHome(false)
+  }, [router])
+
+  //todo: fix
+  useEffect(() => {
+    const cartItems = cartUtils.getStorageCart()
+
+    if (cartItems.length) {
+      setcartItems(cartItems.length)
+    }
+  })
+
   return (
     <>
       <header className="border-b">
@@ -19,7 +36,10 @@ export function Header() {
             <nav>
               <ul className="flex gap-12">
                 <li>
-                  <Link href="/" className="border-b border-slate-300">
+                  <Link
+                    href="/"
+                    className={`border-slate-300 ${isHome && "border-b"}`}
+                  >
                     Home
                   </Link>
                 </li>
@@ -75,14 +95,21 @@ export function Header() {
                   4
                 </div>
               </a>
-              <Link href={"/cart"}>
-                <Image
-                  src={"/Cart.svg"}
-                  width={32}
-                  height={32}
-                  alt="See your cart"
-                />
-              </Link>
+              <div className="relative">
+                <Link href={"/cart"}>
+                  <Image
+                    src={"/Cart.svg"}
+                    width={32}
+                    height={32}
+                    alt="See your cart"
+                  />
+                </Link>
+                {cartItems && (
+                  <div className="text-white bg-red-600 w-5 h-5 rounded-full absolute -top-1 -right-1 z-10 flex justify-center items-center">
+                    {cartItems}
+                  </div>
+                )}
+              </div>
               <a href="#">
                 <Image
                   src={"/User.svg"}
