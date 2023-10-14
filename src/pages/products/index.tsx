@@ -6,7 +6,7 @@ import Link from "next/link"
 import Head from "next/head"
 
 export const getServerSideProps = (async (context) => {
-  const query = context.query.slug
+  const query = context.query.name_like
 
   const response = await fetch(
     `${ApiEnum.BASE_PATH}/products?name_like=${query}`

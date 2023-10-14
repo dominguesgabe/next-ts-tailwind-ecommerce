@@ -66,11 +66,11 @@ export function Header() {
                 value={search}
                 onKeyUp={(event) => {
                   if (event.key === "Enter")
-                    return router.push(`/search/${search}`)
+                    return router.push(`/products?name_like=${search}`)
                 }}
                 onChange={(event) => setSearch(event.target.value)}
               />
-              <Link href={`/search/${search}`}>
+              <Link href={`/products?name_like=${search}`}>
                 <Image
                   src={"/Search.svg"}
                   width={24}
